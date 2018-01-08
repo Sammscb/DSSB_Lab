@@ -1,0 +1,29 @@
+#Hola, este código está pensado para descargar la información de mercado de las diferentes criptomonedas que tenga disponible la plataforma transaccional Poloniex
+#Dentro del código te dejo la opción de generar una función a la que simplemente le reemplaces los valores de las fechas para el periodo deseado
+SDD <- function(date1, date2){
+#Para efectos prácticos del código se usarán las siguientes librerias, en caso de no tenerlas instaladas lo puedes hacer mediante el comando "install.packages()"
+  library(PoloniexR)
+  library(lubridate)
+  fecha1 <- as.Date(date1)
+  fecha2 <- as.Date(date2)
+  dias <- fecha2-fecha1+1
+  poloniex.public <- PoloniexPublicAPI()
+  ticker.info     <- ReturnTicker(poloniex.public)
+  names <- rownames(ticker.info)
+  datos <-matrix(nrow=(dias),ncol=length(names))
+  Base <- as.data.frame(datos)
+  colnames(Base)=names
+                 from    <- as.POSIXct(paste(date1,"00:00:00 UTC"))
+                 to      <- as.POSIXct(paste(date2,"00:00:00 UTC"))
+                 for(i in 1:length(names)){
+                   
+                   Sys.setenv(tz="UTC")
+                   pair <- names[i]
+                   Pasito <- ReturnChartData(theObject = poloniex.public,
+                                             pair      = pair,
+                                             from      = from,
+                                             to        = to,
+                                             period    = "D")
+                   Base[i] <- Pasito$close
+                 }
+}
