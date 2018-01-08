@@ -4,6 +4,7 @@ SDD <- function(date1, date2){
 #Para efectos prácticos del código se usarán las siguientes librerias, en caso de no tenerlas instaladas lo puedes hacer mediante el comando "install.packages()"
   library(PoloniexR)
   library(lubridate)
+#Como te debiste dar cuenta los 2 argumentos de la función son las fechas de inicio y final del periodo a analizar, si no creaste la función puedes definir manualmente las fechas así "date1 <-"..." "   
   fecha1 <- as.Date(date1)
   fecha2 <- as.Date(date2)
   dias <- fecha2-fecha1+1
